@@ -1,0 +1,36 @@
+apiVersion: v1                # Pods belong to the core API group, which uses version v1
+kind: Pod                     # This manifest defines a Pod object
+metadata:                     # Metadata provides identifying information about the Pod
+  name: nginx-pod             # Unique name for the Pod within the namespace
+  labels:                     # Labels are key-value pairs used for selection and grouping
+    app: nginx                # Label indicating this Pod belongs to the 'nginx' app
+
+spec:                         # Specification section defines the desired state of the Pod
+  containers:                 # List of containers that will run inside this Pod
+    - name: nginx-container   # Logical name for the container inside the Pod
+      image: nginx:latest     # Container image to pull from Docker Hub (nginx latest version)
+
+      ports:
+        - containerPort: 80   # The container listens internally on port 80
+
+      resources:              # CPU and memory guarantees and limits
+        requests:             # Minimum resources the container needs to run
+          cpu: "100m"         # Requests 0.1 vCPU (100 millicores)
+          memory: "128Mi"     # Requests 128 MiB memory
+        limits:               # Maximum resources the container is allowed to consume
+          cpu: "250m"         # Limit is 0.25 vCPU
+          memory: "256Mi"     # Limit is 256 MiB memory
+
+      livenessProbe:          # Probe to check if the container is alive
+        httpGet:              # Kubernetes will send an HTTP GET request
+          path: /             # Path to check inside the container
+          port: 80            # Port on which the container serves HTTP
+        initialDelaySeconds: 10  # Wait 10 seconds before first check (container startup time)
+        periodSeconds: 5         # Perform liveness check every 5 seconds
+
+      readinessProbe:         # Probe to check if container is ready to serve traffic
+        httpGet:              # Same HTTP GET mechanism as liveness
+          path: /             # Check the root path of the app
+          port: 80            # Same port 80 used by nginx
+        initialDelaySeconds: 5   # Wait 5 seconds before checking readiness
+        periodSeconds: 5         # Check readiness every 5 seconds
