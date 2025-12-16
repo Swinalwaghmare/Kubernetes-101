@@ -6,7 +6,7 @@ spec:
   type: LoadBalancer
   selector:
     app: myapp
-    version: blue
+    version: green
   ports:
   - name: http
     port: 80
