@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: nginx
+          resources:
+            requests:
+              cpu: '100m'
+              memory: "150Mi"
+            limits:
+              cpu: "250m"
+              memory: "300Mi"
+          imagePullPolicy: Always
+      restartPolicy: Always
+
+
