@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: example-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: example-daemon
+  
+  template:
+    metadata:
+      labels:
+        app: example-daemon
+  
+    spec:
+      # Allow Pod to run on all nodes (including tainted ones)
+      tolerations:
+        - operator: "Exists"
+      
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
