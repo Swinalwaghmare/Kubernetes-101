@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-gree-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: myapp
+    version: blue
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
