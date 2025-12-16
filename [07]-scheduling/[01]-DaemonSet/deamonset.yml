@@ -14,8 +14,8 @@ spec:
   
     spec:
       # Allow Pod to run on all nodes (including tainted ones)
-      tolerations:
-        - operator: "Exists"
+      # tolerations:
+      #   - operator: "Exists"
       
       containers:
         - name: nginx
