@@ -2,5 +2,5 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: dynamic-sc
-provisioner: ebc.csi.aws.com
+provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
