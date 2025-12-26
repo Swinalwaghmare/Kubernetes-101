@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-consumer
+spec:
+  containers:
+    - name: app
+      image: nginx
+      volumeMounts:
+      - name: /data
+        mountPath: storage
+  volumes:
+  - name: storage
+    persistentVolumeClaim:
+      claimName: dynamic-pvc
