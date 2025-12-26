@@ -7,8 +7,8 @@ spec:
     - name: app
       image: nginx
       volumeMounts:
-      - name: /data
-        mountPath: storage
+      - name: storage
+        mountPath: /data
   volumes:
   - name: storage
     persistentVolumeClaim:
