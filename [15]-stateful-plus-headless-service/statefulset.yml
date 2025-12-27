@@ -9,18 +9,26 @@ spec:
       app: mysql # Must match pod template labels exactly.
   serviceName: mysql # serviceName must match the headless service. this enables mysql-0.mysql.default.svc.cluster.local
   replicas: 2
-  containers:
-    - image: mysql:8.0.39
-      name: mysql 
-      env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: ROOT_PASSWORD
-              name: mysecret
-      volumeMounts:
-      - name: mysql-persistent-storage
-        mountPath: /var/lib/mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:8.0.39
+        name: mysql 
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: ROOT_PASSWORD
+                name: mysecret
+        ports:
+        - continerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
