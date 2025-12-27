@@ -6,6 +6,8 @@ metadata:
 # PVC is the contract between pod and storage
 spec:
   storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi # Claim must be ≤ PV capacity.
