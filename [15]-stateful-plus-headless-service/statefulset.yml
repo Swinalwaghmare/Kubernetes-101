@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+# Replicas and Identity
+spec:
+  replicas: 2
+  serviceName: mysql # serviceName must match the headless service. this enables mysql-0.mysql.default.svc.cluster.local
+  selector:
+    mathLabels:
+      app: mysql # Must match pod template labels exactly.
+  containers:
+    - image: mysql:8.0.39
+      name: mysql 
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: ROOT_PASSWORD
+              name: mysecret
+      volumeMounts:
+      - name: mysql-persistent-storage
+        mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+    
+  
