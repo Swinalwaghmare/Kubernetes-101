@@ -1,0 +1,11 @@
+# Persistent Volume Claim
+apiVersion: v1 
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+# PVC is the contract between pod and storage
+spec:
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 5Gi # Claim must be ≤ PV capacity.
