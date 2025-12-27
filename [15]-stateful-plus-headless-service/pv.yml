@@ -1,6 +1,6 @@
 # Persistent Volume
 apiVersion: v1
-kind: PersistetVolume
+kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
 # Creating actual storage on the node
