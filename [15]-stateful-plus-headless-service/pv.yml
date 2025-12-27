@@ -1,0 +1,14 @@
+# Persistent Volume
+apiVersion: v1
+kind: PersistetVolume
+metadata:
+  name: mysql-pv-volume
+# Creating actual storage on the node
+spec:
+  storageClassName: manual # Static provisioning
+  capacity:
+    storage: 5Gi # Defines physical disk size
+  accessModes:
+    - ReadWriteOnce # One node at a time
+  hostPath:
+    path: "/mnt/data" # Stores data on node filesystem
