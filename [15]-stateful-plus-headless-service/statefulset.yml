@@ -4,11 +4,11 @@ metadata:
   name: mysql
 # Replicas and Identity
 spec:
-  replicas: 2
-  serviceName: mysql # serviceName must match the headless service. this enables mysql-0.mysql.default.svc.cluster.local
   selector:
-    mathLabels:
+    matchLabels:
       app: mysql # Must match pod template labels exactly.
+  serviceName: mysql # serviceName must match the headless service. this enables mysql-0.mysql.default.svc.cluster.local
+  replicas: 2
   containers:
     - image: mysql:8.0.39
       name: mysql 
