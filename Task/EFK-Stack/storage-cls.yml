@@ -5,5 +5,5 @@ metadata:
 provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
 recliamPolicy: Retain
-parameter:
+parameters:
   type: gp2
