@@ -4,6 +4,6 @@ metadata:
   name: ebs-storage
 provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
-recliamPolicy: Retain
+reclaimPolicy: Retain
 parameters:
   type: gp2
