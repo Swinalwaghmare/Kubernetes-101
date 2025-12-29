@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: es-cluster
-  Namespace: kube-logging
+  namespace: kube-logging
 spec:
   serviceName: elasticsearch
   replicas: 3
@@ -17,7 +17,7 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data
-      initcontainers:
+      initContainers:
       - name: fix-permission
         image: busybox
         command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
@@ -28,7 +28,7 @@ spec:
       name: data
     spec:
       accessModes: ["ReadWriteOnce"]
-      StorageClassName: ebs-storage
+      storageClassName: ebs-storage
       resources:
         requests:
           storage: 10Gi
