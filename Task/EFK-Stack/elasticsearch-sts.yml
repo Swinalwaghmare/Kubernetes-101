@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: es-cluster
+  Namespace: kube-logging
+spec:
+  serviceName: elasticsearch
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        env:
+        - name: discovery.seed_hosts # Allows nodes to find each other
+          value: "es-cluster-0.elasticsearch,es-cluster-1.elasticsearch,es-cluster-2.elasticsearch"
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      initcontainers:
+      - name: fix-permission
+        image: busybox
+        command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      StorageClassName: ebs-storage
+      resources:
+        requests:
+          storage: 10Gi
